@@ -29,19 +29,49 @@ e.g. a sum cannot be made up of values at index 1, 5, 7, and 8
 
 --
 Input
-  houseArray should be an array of positive numbers
+  houseArray should be an array of numbers
 --
 Returns
-  stakeout should return an object with 2 key value pairs: 
-    sum   - a number representing the largest sum possible given the condition that no two values are adjacent
-    index - an array of numbers representing the indices of the input array that generate the larges sum
+  stakeout should return a number representing the highest possible sum
 --
-Assumptions
-  houseArray is an array of numbers
-  numbers in houseArray are positive
-
 */
+
+'use strict';
 
 var stakeout = function (houseArray) {
 
-}
+  var sumArray = [];
+  // normalize input so negative values are 0
+  // since the function only needs to return the greatest possible sum, negative values are not added and can be considered 0
+  for (var i = 0; i < houseArray.length; i++){
+    if (houseArray[i] < 0) {
+      houseArray[i] = 0;
+    }
+  }
+
+  while (houseArray.length < 4) {
+    houseArray.push(0);
+  }
+
+  sumArray[0] = houseArray[0];
+  sumArray[1] = houseArray[1];
+  sumArray[2] = houseArray[0] + houseArray[1];
+
+  // because negative values are ignored, the greatest possible sum for indices 0 to x is greater than or equal to
+  // the greatest possible sum for indices 0 to x-3 or 0 to x-2 since if houseArray[x] > 0, it can be added to those sums
+  // index x will never be added to the greatest sum of 0 to x-4 as that sum is less than or equal to 0 to x-2
+
+  for (var i = 3; i < houseArray.length; i++){
+    if (sumArray[i-2] > sumArray[i-3]){
+      sumArray[i] = sumArray[i-2] + houseArray[i];
+    } else {
+      sumArray[i] = sumArray[i-3] + houseArray[i];
+    }
+  }
+
+  if (sumArray[sumArray.length - 1] > sumArray[sumArray.length - 2]){
+    return sumArray[sumArray.length - 1];
+  } else {
+    return sumArray[sumArray.length - 2];
+  }
+};
