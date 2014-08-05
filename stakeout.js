@@ -75,3 +75,4 @@ var stakeout = function (houseArray) {
     return sumArray[sumArray.length - 2];
   }
 };
+
