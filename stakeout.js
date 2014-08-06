@@ -76,3 +76,7 @@ var stakeout = function (houseArray) {
   }
 };
 
+if (typeof module !== 'undefined') {
+  module.exports = stakeout;
+}
+
