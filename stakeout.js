@@ -55,7 +55,7 @@ var stakeout = function (houseArray) {
 
   sumArray[0] = houseArray[0];
   sumArray[1] = houseArray[1];
-  sumArray[2] = houseArray[0] + houseArray[1];
+  sumArray[2] = houseArray[0] + houseArray[2];
 
   // because negative values are ignored, the greatest possible sum for indices 0 to x is greater than or equal to
   // the greatest possible sum for indices 0 to x-3 or 0 to x-2 since if houseArray[x] > 0, it can be added to those sums
