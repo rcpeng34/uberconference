@@ -13,7 +13,7 @@ describe ('stakeout', function(){
     // [ 20, 10, 50, 5, 1 ] should return 71
     expect(stakeout([20,10,50,5,1])).to.equal(71);
     // [ 20, 50, 10, 1, 5 ] should return 51
-    expect(stakeout([20,50,10,1,5])).to.equal(51);
+    expect(stakeout([20,50,10,1,5])).to.equal(55);
   });
 
   it('should handle arrays of length < 4', function(){
