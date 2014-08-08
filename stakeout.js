@@ -40,19 +40,26 @@ Returns
 
 var stakeout = function (houseArray) {
 
-  var sumArray = [];
+  // check if the input is an array
+  if (!Array.isArray(houseArray)){
+    throw new TypeError('Input was not an array!');
+  }
+
   // normalize input so negative values are 0
   // since the function only needs to return the greatest possible sum, negative values are not added and can be considered 0
+  // non-numeric elements are also set to 0
   for (var i = 0; i < houseArray.length; i++){
-    if (houseArray[i] < 0) {
+    if (typeof(houseArray[i]) !== 'number' || houseArray[i] < 0) {
       houseArray[i] = 0;
     }
   }
 
+  // set the length of the array to 4 by adding 0 values, this way the function won't try to access an undefined value
   while (houseArray.length < 4) {
     houseArray.push(0);
   }
 
+  var sumArray = [];
   sumArray[0] = houseArray[0];
   sumArray[1] = houseArray[1];
   sumArray[2] = houseArray[0] + houseArray[2];
@@ -69,6 +76,8 @@ var stakeout = function (houseArray) {
     }
   }
 
+  // since the index of sumArray represents the greatest sum for a sub array from 0 up to that element, 
+  // check only the last 2 and return the larger of them
   if (sumArray[sumArray.length - 1] > sumArray[sumArray.length - 2]){
     return sumArray[sumArray.length - 1];
   } else {
@@ -76,6 +85,7 @@ var stakeout = function (houseArray) {
   }
 };
 
+// set exporting for terminal use
 if (typeof module !== 'undefined') {
   module.exports = stakeout;
 }
