@@ -59,30 +59,34 @@ var stakeout = function (houseArray) {
     houseArray.push(0);
   }
 
+  // Determine initial values for sumArray before
   var sumArray = [];
   sumArray[0] = houseArray[0];
-  sumArray[1] = houseArray[1];
-  sumArray[2] = houseArray[0] + houseArray[2];
+  sumArray[1] = houseArray[0] > houseArray[1] ? houseArray[0] : houseArray[1];
+  sumArray[2] = houseArray[0] + houseArray[2] > houseArray[1] ? houseArray[0] + houseArray[2] : houseArray[1];
 
   // because negative values are ignored, the greatest possible sum for indices 0 to x is greater than or equal to
   // the greatest possible sum for indices 0 to x-3 or 0 to x-2 since if houseArray[x] > 0, it can be added to those sums
   // index x will never be added to the greatest sum of 0 to x-4 as that sum is less than or equal to 0 to x-2
-
+  // after determining whether houseArray[x] should be added to sumArray[x-2] or sumArray[x-3],
+  // we should compare to just sumArray[x-1] to determine the optimal value of sumArray[x]
   for (var i = 3; i < houseArray.length; i++){
+    var optimalWithCurrentHouse = 0;
     if (sumArray[i-2] > sumArray[i-3]){
-      sumArray[i] = sumArray[i-2] + houseArray[i];
+      optimalWithCurrentHouse = sumArray[i-2] + houseArray[i];
     } else {
-      sumArray[i] = sumArray[i-3] + houseArray[i];
+      optimalWithCurrentHouse = sumArray[i-3] + houseArray[i];
+    }
+    if (optimalWithCurrentHouse < sumArray[i-1]) {
+      sumArray[i] = sumArray[i-1];
+    } else {
+      sumArray[i] = optimalWithCurrentHouse;
     }
   }
 
   // since the index of sumArray represents the greatest sum for a sub array from 0 up to that element, 
-  // check only the last 2 and return the larger of them
-  if (sumArray[sumArray.length - 1] > sumArray[sumArray.length - 2]){
-    return sumArray[sumArray.length - 1];
-  } else {
-    return sumArray[sumArray.length - 2];
-  }
+  // just return the last element
+  return sumArray[sumArray.length - 1];
 };
 
 // set exporting for terminal use
